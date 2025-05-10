@@ -2,7 +2,7 @@ package bstreeInterface;
 
 import exceptions.ExceptionIsEmpty;
 import exceptions.ItemDuplicated;
-import exceptions.ItemNoFound;
+import exceptions.ItemNotFound;
 
 public interface BinarySearchTree<E> {
   void insert (E data) throws ItemDuplicated;
