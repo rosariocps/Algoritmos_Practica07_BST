@@ -5,7 +5,7 @@ public class Prueba {
         LinkedBST<Integer> arbol = new LinkedBST<>();
 
         try {
-            // insertamos los nodos en orden para que el arbol tenga la forma descrita
+            // insertamos los nodos segun el arbol descrito
             arbol.insert(400); // raiz
             arbol.insert(100); // hijo izq de 400
             arbol.insert(700); // hijo der de 400
@@ -13,9 +13,17 @@ public class Prueba {
             arbol.insert(200); // hijo der de 100
             arbol.insert(75);  // hijo der de 50
 
-            // imprimimos el recorrido in-orden
+            // in-orden
             System.out.println("Recorrido In-Orden:");
-            System.out.println(arbol); // usa toString que llama a inorder
+            System.out.println(arbol);
+
+            // pre-orden
+            System.out.println("Recorrido Pre-Orden:");
+            System.out.println(arbol.recorridoPreOrden());
+
+            // post-orden
+            System.out.println("Recorrido Post-Orden:");
+            System.out.println(arbol.recorridoPostOrden());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

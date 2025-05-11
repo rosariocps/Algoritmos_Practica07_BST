@@ -123,4 +123,32 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             inorder(node.right, sb); // y luego voy a la derecha
         }
     }
+
+    public String recorridoPreOrden() {
+        StringBuilder sb = new StringBuilder();
+        preOrder(root, sb);
+        return sb.toString().trim();
+    }
+    // metodo que recorre el arbol en pre-orden y guarda los datos en el StringBuilder
+    private void preOrder(Node node, StringBuilder sb) {
+        if (node != null) {
+            sb.append(node.data).append(" ");   // visita la raiz primero
+            preOrder(node.left, sb);            // luego recorre subarbol izquierdo
+            preOrder(node.right, sb);           // luego recorre subarbol derecho
+        }
+    }
+
+    public String recorridoPostOrden() {
+        StringBuilder sb = new StringBuilder();
+        postOrder(root, sb);
+        return sb.toString().trim();
+    }    
+    // metodo que recorre el arbol en post-orden y guarda los datos en el StringBuilder
+    private void postOrder(Node node, StringBuilder sb) {
+        if (node != null) {
+            postOrder(node.left, sb);   // primero recorre subárbol izquierdo
+            postOrder(node.right, sb);  // luego recorre subárbol derecho
+            sb.append(node.data).append(" "); // al final visita la raíz
+        }
+    }
 }
