@@ -34,6 +34,21 @@ public class Prueba {
             System.out.println("Resultado despues de eliminar todos los nodos: ");
             System.out.println(arbol);
 
+            LinkedBST<Double> arbolito2 = new LinkedBST<>();
+
+            arbolito2.insert(2.2);
+            arbolito2.insert(7.7);
+            arbolito2.insert(5.5);
+            arbolito2.insert(4.4);
+            arbolito2.insert(1.1);
+            arbolito2.insert(9.9);
+            arbolito2.insert(6.6);
+
+            System.out.println("Elementos de arbolito2: ");
+            System.out.println(arbolito2);
+            // Número de nodos en total de un arbol
+            System.out.println("Cantidad total de nodos:" + arbolito2.countAllNodes());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

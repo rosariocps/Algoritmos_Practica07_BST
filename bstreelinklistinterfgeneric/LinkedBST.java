@@ -5,7 +5,7 @@ import exceptions.ExceptionIsEmpty; // importo la excepcion si el arbol esta vac
 import exceptions.ItemDuplicated; // importo la excepcion si el dato ya existe
 import exceptions.ItemNotFound; // importo la excepcion si el dato no se encuentra
 
-public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> { // esta es mi clase generica que implementa la interfaz del arbol
+public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> { // esta es la clase generica que implementa la interfaz del arbol
 
     class Node { // clase interna para los nodos del arbol
         E data; // este es el dato del nodo
@@ -72,6 +72,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         }
         root = delete(root, data); // llamo al metodo recursivo empezando desde la raiz
     }
+    
     /**
      * Elimina un nodo del árbol considerando los tres casos:
      * 1. Nodo sin hijos (hoja)
@@ -191,6 +192,27 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         root = null;
     }
 
+    // METODO QUE CUENTA TODOS LOS NODOS DE UN ARBOL
+    public int countAllNodes(){
+        if(isEmpty()){ // Verifica si el arbol esta vacío, pues de estarlo, no tendría caso llamar al método recursivo
+            return 0; // Devolvería cero y ahi queda
+        }
+        return countAllNodes(root); // Se llama al metodo recursivo y se inicializa con el primer nodo del árbol
 
-    
+    }
+
+    private int countAllNodes(Node nodo){ // Método privado recursivo que cuenta todos los nodos
+        if(nodo == null){ // Si el nodo es nulo significa que hemos llegado al final de una rama
+            return 0;
+        } 
+        else{
+            int contador = 1; // Si no es nulo contamos el nodo
+            /* A contador le agregamos lo que retorna de aplicar este mismo método pero ahora el
+            parametro es el hijo izquierdo. Y hace lo mismo con el derecho. */
+            contador += countAllNodes(nodo.left);
+            contador += countAllNodes(nodo.right);
+            return contador; // Finalmente se retorna el valor que se ha acumulado
+        }
+    }
+  
 }
