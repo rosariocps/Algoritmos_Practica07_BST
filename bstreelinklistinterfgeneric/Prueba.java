@@ -25,6 +25,10 @@ public class Prueba {
             System.out.println("Recorrido Post-Orden:");
             System.out.println(arbol.recorridoPostOrden());
 
+            //hallar min y max
+            System.out.println("Valor minimo en el BST: " + arbol.getMin());
+            System.out.println("Valor maximo en el BST: " + arbol.getMax());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

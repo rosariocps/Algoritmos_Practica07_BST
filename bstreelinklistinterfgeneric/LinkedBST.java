@@ -151,4 +151,36 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             sb.append(node.data).append(" "); // al final visita la raíz
         }
     }
+    
+    private E findMinNode(Node node) throws ItemNotFound {
+        if (node == null) {
+            throw new ItemNotFound("Subarbol vacio, no se puede encontrar el minimo");
+        }
+        Node current = node;
+        while (current.left != null) {
+            current = current.left;
+        }
+        // validamos si el valor existe usando search
+        return search(current.data);
+    }
+    private E findMaxNode(Node node) throws ItemNotFound {
+        if (node == null) {
+            throw new ItemNotFound("Subarbol vacio, no se puede encontrar el maximo");
+        }
+        Node current = node;
+        while (current.right != null) {
+            current = current.right;
+        }
+        // validamos si el valor existe usando search
+        return search(current.data);
+    }
+    public E getMin() throws ItemNotFound {
+        return findMinNode(root);
+    }
+    
+    public E getMax() throws ItemNotFound {
+        return findMaxNode(root);
+    }
+    
+    
 }
