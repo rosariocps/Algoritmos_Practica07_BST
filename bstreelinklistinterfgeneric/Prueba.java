@@ -29,6 +29,11 @@ public class Prueba {
             System.out.println("Valor minimo en el BST: " + arbol.getMin());
             System.out.println("Valor maximo en el BST: " + arbol.getMax());
 
+            // Eliminar todos los nodos del arbol
+            arbol.destroyNodes();
+            System.out.println("Resultado despues de eliminar todos los nodos: ");
+            System.out.println(arbol);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
