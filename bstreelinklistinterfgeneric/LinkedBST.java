@@ -16,9 +16,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             left = right = null; // al inicio los hijos son null
         }
     }
-
     private Node root; // este es el nodo raiz del arbol
-    private boolean eliminado; // bandera para saber si se elimino un nodo
 
     public LinkedBST() { // constructor del arbol
         root = null; // al inicio el arbol esta vacio
@@ -72,10 +70,14 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         if (isEmpty()) { // si el arbol esta vacio, lanzo excepcion
             throw new ExceptionIsEmpty("el arbol esta vacio");
         }
-        eliminado = false; // al inicio no se ha eliminado nada
         root = delete(root, data); // llamo al metodo recursivo empezando desde la raiz
     }
-
+    /**
+     * Elimina un nodo del árbol considerando los tres casos:
+     * 1. Nodo sin hijos (hoja)
+     * 2. Nodo con un solo hijo
+     * 3. Nodo con dos hijos (se reemplaza con el mínimo del subárbol derecho)
+     */
     private Node delete(Node node, E data) { // metodo recursivo para eliminar
         if (node == null) { // si no encuentro el nodo, retorno null
             return null;
@@ -86,10 +88,10 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         } else if (comp > 0) { // si es mayor, busco a la derecha
             node.right = delete(node.right, data);
         } else { // si son iguales, lo encontre y lo elimino
-            eliminado = true; // marco que ya lo elimine
+            //Caso 1 o 2
             if (node.left == null) return node.right; // si no tiene hijo izquierdo, lo reemplazo por el derecho
             if (node.right == null) return node.left; // si no tiene hijo derecho, lo reemplazo por el izquierdo
-
+            //Caso 3: tiene dos hijos
             Node min = min(node.right); // si tiene dos hijos, busco el menor del lado derecho
             node.data = min.data; // copio ese valor en el nodo actual
             node.right = delete(node.right, min.data); // y ahora elimino ese nodo menor
@@ -151,29 +153,28 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             sb.append(node.data).append(" "); // al final visita la raíz
         }
     }
-    
     private E findMinNode(Node node) throws ItemNotFound {
         if (node == null) {
-            throw new ItemNotFound("Subarbol vacio, no se puede encontrar el minimo");
+            throw new ItemNotFound("Subárbol vacío, no se puede encontrar el mínimo");
         }
         Node current = node;
         while (current.left != null) {
             current = current.left;
         }
-        // validamos si el valor existe usando search
-        return search(current.data);
+        return current.data;
     }
+
     private E findMaxNode(Node node) throws ItemNotFound {
         if (node == null) {
-            throw new ItemNotFound("Subarbol vacio, no se puede encontrar el maximo");
+            throw new ItemNotFound("Subárbol vacío, no se puede encontrar el máximo");
         }
         Node current = node;
         while (current.right != null) {
             current = current.right;
         }
-        // validamos si el valor existe usando search
-        return search(current.data);
+        return current.data;
     }
+
     public E getMin() throws ItemNotFound {
         return findMinNode(root);
     }
@@ -181,6 +182,5 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     public E getMax() throws ItemNotFound {
         return findMaxNode(root);
     }
-    
     
 }
