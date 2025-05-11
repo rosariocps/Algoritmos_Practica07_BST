@@ -182,5 +182,13 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     public E getMax() throws ItemNotFound {
         return findMaxNode(root);
     }
+
+    //Método que elimina todos los nodos de un BST
+    public void destroyNodes() throws ExceptionIsEmpty{
+        if(isEmpty()){
+            throw new ExceptionIsEmpty("No se puede eliminar todos los nodos porque el arbol ya esta vacío.");
+        }
+        root = null;
+    }
     
 }
