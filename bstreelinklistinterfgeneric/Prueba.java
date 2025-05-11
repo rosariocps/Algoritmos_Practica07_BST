@@ -47,7 +47,9 @@ public class Prueba {
             System.out.println("Elementos de arbolito2: ");
             System.out.println(arbolito2);
             // Número de nodos en total de un arbol
-            System.out.println("Cantidad total de nodos:" + arbolito2.countAllNodes());
+            System.out.println("Cantidad total de nodos: " + arbolito2.countAllNodes());
+            // Número de nodos no-hoja en total de un arbol
+            System.out.println("Cantidad total de nodos no-hoja: " + arbolito2.countNoHojas());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

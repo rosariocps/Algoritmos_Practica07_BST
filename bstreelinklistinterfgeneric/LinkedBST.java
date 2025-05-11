@@ -214,5 +214,28 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             return contador; // Finalmente se retorna el valor que se ha acumulado
         }
     }
-  
+
+    // METODO QUE CUENTA TODOS LOS NODOS NO-HOJA DE UN ARBOL
+    public int countNoHojas(){
+        if(isEmpty()){
+            return 0;
+        }
+        return countNoHojas(root);
+    }
+
+    private int countNoHojas(Node nodo){
+        if(nodo == null){
+            return 0;
+        }
+
+        if(nodo.left == null && nodo.right == null){
+            return 0;
+        }
+        else{
+            int contador = 1;
+            contador += countNoHojas(nodo.left);
+            contador += countNoHojas(nodo.right);
+            return contador;
+        }
+    }  
 }
