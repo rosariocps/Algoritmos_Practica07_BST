@@ -50,6 +50,8 @@ public class Prueba {
             System.out.println("Cantidad total de nodos: " + arbolito2.countAllNodes());
             // Número de nodos no-hoja en total de un arbol
             System.out.println("Cantidad total de nodos no-hoja: " + arbolito2.countNoHojas());
+            // Número de nodos hoja en total de un arbol
+            System.out.println("Cantidad total de nodos hoja: " + arbolito2.countHojas());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
