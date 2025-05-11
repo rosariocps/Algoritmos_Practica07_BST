@@ -115,5 +115,19 @@ public class QueueLink<E> implements Queue<E> { //Cola implementada con una list
             index++;
         }
         return -1; // Si no encontramos el elemento, devolvemos -1
-    }    
+    }
+    
+    // METODO AGREGADO QUE CALCULA LA CANTIDAD DE ELEMENTO DE UNA COLA
+    @Override
+    public int numeroDeElementos(){
+        int contador = 0;
+        Node<E> nodoCurrent = first;
+        while(nodoCurrent != null){
+            contador++;
+            nodoCurrent = nodoCurrent.getNext();
+        }
+        return contador;
+    }
+
+    
 }

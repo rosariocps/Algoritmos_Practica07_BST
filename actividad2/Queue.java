@@ -8,4 +8,5 @@ public interface Queue<E> {
     E front() throws ExceptionIsEmpty; // -> Retorna el elemento al frente sin eliminarlo
     E back() throws ExceptionIsEmpty;  // -> Retorna el último elemento agregado (final de la cola)
     boolean isEmpty(); // -> Retorna true si la cola no tiene elementos
+    int numeroDeElementos(); // METODO AGREGADO QUE CALCULA LA CANTIDAD DE ELEMENTO DE UNA COLA
 }

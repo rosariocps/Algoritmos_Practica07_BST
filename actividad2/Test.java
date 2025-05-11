@@ -14,6 +14,8 @@ public class Test {
             colaEnteros.enqueue(30);
             System.out.println(colaEnteros);  // -> Cola: [10, 20, 30]
 
+            System.out.println("Cantidad de elementos de la colaEnteros: " + colaEnteros.numeroDeElementos() );
+
             System.out.println("Frente: " + colaEnteros.front()); // -> 10
             System.out.println("Último: " + colaEnteros.back());  // -> 30
 
@@ -38,6 +40,8 @@ public class Test {
 
             colaNombres.dequeue();  // -> elimina "Ana"
             System.out.println(colaNombres); // -> Cola: [Luis, Carlos]
+
+
 
         } catch (ExceptionIsEmpty e) {
             System.out.println("Error: " + e.getMessage());
