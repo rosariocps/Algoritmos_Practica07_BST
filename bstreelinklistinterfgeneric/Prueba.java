@@ -70,12 +70,11 @@ public class Prueba {
             System.out.println(arbolito2.drawBST());
 
             LinkedBST<String> arbolDeStrings = new LinkedBST<>();
-            arbolDeStrings.insert("S");
-            arbolDeStrings.insert("A");
-            arbolDeStrings.insert("L");
-            arbolDeStrings.insert("U");
-            arbolDeStrings.insert("D");
-            arbolDeStrings.insert("O");
+            arbolDeStrings.insert("Camote");
+            arbolDeStrings.insert("Papa");
+            arbolDeStrings.insert("Manzana");
+            arbolDeStrings.insert("Papaya");
+            arbolDeStrings.insert("Arroz");
 
             // Dibujar arbol
             System.out.println("Dibujo del arbolDeStrings: ");
@@ -84,6 +83,12 @@ public class Prueba {
             // Verificar si dos arboles tienen el mismo área
             System.out.println("¿Los arboles arbolito2 y arbolDeStrings tiene la misma area?");
             System.out.println(sameArea(arbolito2,arbolDeStrings));
+
+            // Representación parenthetic de un arbol
+            System.out.println("Representación entre paréntesis con sangría de arbolito2: ");
+            System.err.println(arbolito2.parenthesize());
+            System.out.println("Representación entre paréntesis con sangría de arbolDeStrings: ");
+            System.err.println(arbolDeStrings.parenthesize());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

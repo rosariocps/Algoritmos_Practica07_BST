@@ -389,10 +389,43 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     }
 
     private void drawSubtree(Node nodo, StringBuilder sb, int nivel) {
-        if (nodo == null) return;
+        if (nodo == null){
+            return;
+        }
 
         drawSubtree(nodo.right, sb, nivel + 1);
         sb.append("      ".repeat(nivel)).append("|--- ").append(nodo.data).append("\n");
         drawSubtree(nodo.left, sb, nivel + 1);
+    }
+
+    // METODO QUE IMPRIME LA REPRESENTACION ENTRE PARENTESIS CON SANGRIA DE UN ARBOL
+    public String parenthesize(){
+        StringBuilder sb = new StringBuilder();
+        parenthesize(root, sb, 0);
+        return sb.toString();
+    }
+
+    private void parenthesize(Node nodo, StringBuilder sb, int nivel){
+        if (nodo == null){
+            return;
+        }
+        
+        sb.append("   ".repeat(nivel)).append(nodo.data);
+
+        if (nodo.left != null || nodo.right != null) {
+            sb.append(" (\n");
+
+            if (nodo.left != null) {
+                parenthesize(nodo.left, sb, nivel + 1);
+                sb.append("\n");
+            }
+
+            if (nodo.right != null) {
+                parenthesize(nodo.right, sb, nivel + 1);
+                sb.append("\n");
+            }
+
+            sb.append("   ".repeat(nivel)).append(")");
+        }
     }
 }
