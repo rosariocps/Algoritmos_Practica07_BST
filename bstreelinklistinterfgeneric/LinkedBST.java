@@ -1,5 +1,6 @@
 package bstreelinklistinterfgeneric; // este es el paquete donde esta la clase
 
+import actividad2.QueueLink;
 import bstreeInterface.BinarySearchTree; // importo la interfaz que voy a implementar
 import exceptions.ExceptionIsEmpty; // importo la excepcion si el arbol esta vacio
 import exceptions.ItemDuplicated; // importo la excepcion si el dato ya existe
@@ -259,4 +260,59 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         return countHojas(nodo.left) + countHojas(nodo.right);
     }
 
+    public int height(E x) throws ItemNotFound {
+        Node nodoRaiz = getNode(x); // Obtenemos el nodo con la data x
+
+        if (nodoRaiz == null) {
+            return -1; // Si no existe el subárbol, devolvemos -1
+        }
+
+        QueueLink<Node> cola = new QueueLink<>(); // Creamos una cola para recorrido por niveles
+        cola.enqueue(nodoRaiz); // Insertamos el nodo raíz del subárbol
+        int altura = -1; // Inicializamos la altura
+
+        while (!cola.isEmpty()) {
+            int nivel = cola.numeroDeElementos(); // Número de nodos en el nivel actual
+            altura++; // Aumentamos la altura por cada nivel recorrido
+
+            for (int i = 0; i < nivel; i++) {
+                try {
+                    Node actual = cola.dequeue(); // Extraemos el nodo actual
+
+                    if (actual.left != null) {
+                        cola.enqueue(actual.left); // Encolamos hijo izquierdo si existe
+                    }
+                    if (actual.right != null) {
+                        cola.enqueue(actual.right); // Encolamos hijo derecho si existe
+                    }
+                } catch (actividad1.ExceptionIsEmpty e) {
+                    System.out.println("Error al intentar quitar de la cola: " + e.getMessage());
+                }
+                    
+            }
+        }
+    return altura; // Devolvemos la altura final calculada
+    }
+
+
+    private Node getNode(E data) throws ItemNotFound {
+        Node nodo = root;
+
+        while(nodo != null){
+            int comp = data.compareTo(nodo.data);
+
+            if(comp == 0){
+                return nodo;
+            }
+            else if(comp > 0){
+                nodo = nodo.right;
+            }
+            else{
+                nodo = nodo.left;
+            }
+        }
+        throw new ItemNotFound("El nodo con data " + data + " no existe.");
+    }
+
+    
 }

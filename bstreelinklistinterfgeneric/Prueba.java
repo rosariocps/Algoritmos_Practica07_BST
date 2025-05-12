@@ -52,6 +52,9 @@ public class Prueba {
             System.out.println("Cantidad total de nodos no-hoja: " + arbolito2.countNoHojas());
             // Número de nodos hoja en total de un arbol
             System.out.println("Cantidad total de nodos hoja: " + arbolito2.countHojas());
+            // Altura de un arbol respecto a "x"            
+            System.out.println("Altura del subarbol con raiz 7.7: " + arbolito2.height(7.7));
+            System.out.println("Altura del arbol completo: " + arbolito2.height(2.2));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
