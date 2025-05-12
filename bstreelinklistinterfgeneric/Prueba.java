@@ -86,9 +86,9 @@ public class Prueba {
 
             // Representación parenthetic de un arbol
             System.out.println("Representación entre paréntesis con sangría de arbolito2: ");
-            System.err.println(arbolito2.parenthesize());
+            System.out.println(arbolito2.parenthesize());
             System.out.println("Representación entre paréntesis con sangría de arbolDeStrings: ");
-            System.err.println(arbolDeStrings.parenthesize());
+            System.out.println(arbolDeStrings.parenthesize());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -96,10 +96,15 @@ public class Prueba {
     }
 
     //METODO QUE VERIFICA SI DOS ARBOLES TIENEN LA MISMA AREA
+    // Se usa un comodín genérico (?) porque no importa el tipo de datos almacenados en el árbol.
     public static boolean sameArea(LinkedBST<?> arbol1,LinkedBST<?> arbol2){
         try {
+            // Se llama al método areaBST() de ambos árboles y se comparan sus resultados.
+            // Si ambas áreas son iguales, se retorna true. Caso contrario, false.
             return arbol1.areaBST() == arbol2.areaBST();
         } catch (Exception e) {
+            // Si ocurre una excepción durante el cálculo (por ejemplo, si el árbol está vacío),
+            // se imprime un mensaje de error y se retorna false como valor por defecto.
             System.out.println("Error al calcular área: " + e.getMessage());
             return false;
         }
