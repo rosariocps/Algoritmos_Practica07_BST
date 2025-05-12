@@ -133,6 +133,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         preOrder(root, sb);
         return sb.toString().trim();
     }
+    
     // metodo que recorre el arbol en pre-orden y guarda los datos en el StringBuilder
     private void preOrder(Node node, StringBuilder sb) {
         if (node != null) {
@@ -146,7 +147,8 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         StringBuilder sb = new StringBuilder();
         postOrder(root, sb);
         return sb.toString().trim();
-    }    
+    } 
+
     // metodo que recorre el arbol en post-orden y guarda los datos en el StringBuilder
     private void postOrder(Node node, StringBuilder sb) {
         if (node != null) {
@@ -155,26 +157,35 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             sb.append(node.data).append(" "); // al final visita la raíz
         }
     }
+
     private E findMinNode(Node node) throws ItemNotFound {
+        // Si el nodo es null, lanzamos excepción: no hay subárbol donde buscar
         if (node == null) {
             throw new ItemNotFound("Subárbol vacío, no se puede encontrar el mínimo");
         }
+        // Creamos una referencia para recorrer desde el nodo dado
         Node current = node;
+        // En un BST, el valor mínimo siempre está en el extremo más a la izquierda
         while (current.left != null) {
             current = current.left;
         }
-        return current.data;
+        // Cuando current.left es null, current contiene el valor mínimo
+        return current.data; // Retornamos su data
     }
 
     private E findMaxNode(Node node) throws ItemNotFound {
+        // Si el nodo es null, lanzamos una excepción: no hay subárbol donde buscar
         if (node == null) {
             throw new ItemNotFound("Subárbol vacío, no se puede encontrar el máximo");
         }
+        // Creamos una referencia para recorrer desde el nodo dado
         Node current = node;
+        // En un BST, el valor maximo siempre está en el extremo más a la derecha
         while (current.right != null) {
             current = current.right;
         }
-        return current.data;
+        // Cuando current.right es null, current contiene el valor maximo
+        return current.data;// Retornamos su data
     }
 
     public E getMin() throws ItemNotFound {
@@ -218,74 +229,93 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
 
     // METODO QUE CUENTA TODOS LOS NODOS NO-HOJA DE UN ARBOL
     public int countNoHojas(){
+        // Si el árbol está vacío, no hay nodos que contar
         if(isEmpty()){
             return 0;
         }
+        // Llama al método recursivo privado, comenzando desde la raíz
         return countNoHojas(root);
     }
 
+    // MÉTODO RECURSIVO PRIVADO QUE CUENTA LOS NODOS NO-HOJA A PARTIR DE UN NODO DADO
     private int countNoHojas(Node nodo){
+        // Caso base: si el nodo es null, retornamos 0
         if(nodo == null){
             return 0;
         }
 
+        // Si el nodo es hoja (no tiene hijos), no lo contamos
         if(nodo.left == null && nodo.right == null){
             return 0;
         }
         else{
+            // Si tiene al menos un hijo, entonces es un nodo no-hoja, contamos 1
             int contador = 1;
+
+            // Seguimos recorriendo recursivamente hacia ambos lados
             contador += countNoHojas(nodo.left);
             contador += countNoHojas(nodo.right);
+
+            // Retornamos la suma total
             return contador;
         }
     }
     
     // METODO QUE CUENTA LOS NODOS HOJA DE UN ARBOL
     public int countHojas(){
-        if(isEmpty()){
+        if(isEmpty()){ // Si el árbol está vacío retorna 0
             return 0;
         }
+        // Llamamos al método recursivo privado, comenzando desde la raíz
         return countHojas(root);
     }
 
+    // MÉTODO PRIVADO RECURSIVO QUE CUENTA LAS HOJAS A PARTIR DE UN NODO DADO
     private int countHojas(Node nodo){
+        // Caso base: si el nodo es null, retornamos 0 porque no hay nada que contar
         if(nodo == null){
             return 0;
         }
 
+        // Si el nodo actual no tiene hijos, entonces es una hoja: contamos 1
         if(nodo.left == null && nodo.right == null){
             return 1;
         }
-        
+        /* Si tiene al menos un hijo, seguimos recorriendo recursivamente sus ramas
+           La suma de las hojas del subárbol izquierdo y derecho será el total */
         return countHojas(nodo.left) + countHojas(nodo.right);
     }
 
     // METODO QUE HALLA LA ALTURA DE UN SUBARBOL CON RAIZ DE DATA "x"
     public int height(E x) throws ItemNotFound {
-        Node nodoRaiz = getNode(x); // Obtenemos el nodo con la data x
+        Node nodoRaiz = getNode(x); // Obtenemos el nodo con la data x con el metodo getNode()
 
         if (nodoRaiz == null) {
             return -1; // Si no existe el subárbol, devolvemos -1
         }
 
+        //Utilizamos la clase QueueLink implementada en el laboratorio 6
         QueueLink<Node> cola = new QueueLink<>(); // Creamos una cola para recorrido por niveles
         cola.enqueue(nodoRaiz); // Insertamos el nodo raíz del subárbol
         int altura = -1; // Inicializamos la altura
 
+        // Mientras haya nodos en la cola, seguimos procesando nivel por nivel
         while (!cola.isEmpty()) {
-            int nivel = cola.numeroDeElementos(); // Número de nodos en el nivel actual
+            int nivel = cola.numeroDeElementos(); // Obtenemos el número de nodos en el nivel actual
             altura++; // Aumentamos la altura por cada nivel recorrido
 
+            // Recorremos todos los nodos del nivel actual
             for (int i = 0; i < nivel; i++) {
                 try {
-                    Node actual = cola.dequeue(); // Extraemos el nodo actual
+                    Node nodoCurrent = cola.dequeue(); // Extraemos el nodo actual
 
-                    if (actual.left != null) {
-                        cola.enqueue(actual.left); // Encolamos hijo izquierdo si existe
+                    if (nodoCurrent.left != null) {
+                        cola.enqueue(nodoCurrent.left); // Encolamos hijo izquierdo si existe
                     }
-                    if (actual.right != null) {
-                        cola.enqueue(actual.right); // Encolamos hijo derecho si existe
+                    if (nodoCurrent.right != null) {
+                        cola.enqueue(nodoCurrent.right); // Encolamos hijo derecho si existe
                     }
+                // Capturamos la excepción por si algo fallara al sacar de la cola
                 } catch (actividad1.ExceptionIsEmpty e) {
                     System.out.println("Error al intentar quitar de la cola: " + e.getMessage());
                 }
@@ -295,49 +325,59 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     return altura; // Devolvemos la altura final calculada
     }
 
-
+    // MÉTODO PRIVADO QUE BUSCA Y RETORNA EL NODO QUE CONTIENE LA DATA 'data'
     private Node getNode(E data) throws ItemNotFound {
+        // Empezamos desde la raíz del árbol
         Node nodo = root;
 
+        // Recorremos el árbol iterativamente buscando el nodo con la data indicada
         while(nodo != null){
             int comp = data.compareTo(nodo.data);
 
             if(comp == 0){
-                return nodo;
+                return nodo; // Si encontramos el nodo con la data exacta, lo retornamos
             }
             else if(comp > 0){
-                nodo = nodo.right;
+                nodo = nodo.right; // Si 'data' es mayor, vamos al subárbol derecho
             }
             else{
-                nodo = nodo.left;
+                nodo = nodo.left; // Si 'data' es menor, vamos al subárbol izquierdo
             }
         }
+        // Si el nodo no fue encontrado, lanzamos la excepción correspondiente
         throw new ItemNotFound("El nodo con data " + data + " no existe.");
     }
 
     // MÉTODO QUE RETORNA LA AMPLITUD DE UN ARBOL
     public int amplitude(int nivel) throws ItemNotFound {
+        // Verificamos si el árbol está vacío
         if (isEmpty()) {
-            return 0;
+            return 0; // Si lo está, no hay nodos, entonces su amplitud es 0
         }
 
+        // Calculamos la altura del árbol desde la raíz, usando el método height()
         int altura = height(root.data);
 
+        // Si el nivel solicitado es menor que 0 o mayor que la altura del árbol, el nivel no existe, así que retornamos 0
         if(nivel < 0 || nivel > altura){
             return 0;
         }
-
+        // Si el nivel es válido, llamamos al método recursivo que cuenta los nodos en ese nivel
         return contarNodosEnNivel(root,nivel);
     }
 
     // MÉTODO RECURSIVO PARA CONTAR CUANTOS NODOS HAY EN UN NIVEL EN ESPECÍFICO
     private int contarNodosEnNivel(Node nodo, int nivel) {
+        // Caso base 1: si el nodo es null, ya no hay más que recorrer en esta rama
         if (nodo == null) {
             return 0;
         }
+        // Caso base 2: si el nivel es 0, significa que el nodo actual está justo en el nivel que buscamos, la raiz
         if (nivel == 0) {
             return 1;
         } else {
+            /* Caso recursivo: si aún no estamos en el nivel deseado,
+            bajamos al siguiente nivel tanto por la izquierda como por la derecha.*/
             return contarNodosEnNivel(nodo.left, nivel - 1) +
                     contarNodosEnNivel(nodo.right, nivel - 1);
         }
@@ -345,30 +385,37 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     
     // METODO QUE RETORNA EL ÁREA DE UN ARBOL
     public int areaBST() throws ItemNotFound {
+        // Si el árbol está vacío, su área es 0
         if (isEmpty()) {
             return 0;
         }
 
         // Paso 1: Se calcula el número de hojas
-        int nodosHoja = 0;
-        QueueLink<Node> cola = new QueueLink<>();
-        cola.enqueue(root);
+        int nodosHoja = 0; // Inicializamos el contador de hojas en 0
+        // Se utiliza la clas QueueLink implementada del laborario 6
+        QueueLink<Node> cola = new QueueLink<>(); // Se crea una cola enlazada vacia 
+        cola.enqueue(root); // Se agrega la raiz a la cola
 
+        // Mientras haya nodos por recorrer en la cola
         while (!cola.isEmpty()) {
             try {
-                Node actual = cola.dequeue();
+                // Quitamos el primer nodo de la cola y lo analizamos
+                Node nodoCurrent = cola.dequeue();
 
-                if (actual.left == null && actual.right == null) {
-                    nodosHoja++;
+                // Verificamos si el nodo actual es una hoja
+                if (nodoCurrent.left == null && nodoCurrent.right == null) {
+                    nodosHoja++; // Si es hoja, incrementamos el contador
                 } else {
-                    if (actual.left != null){
-                        cola.enqueue(actual.left);
+                    // Si tiene hijo izquierdo, lo agregamos a la cola para analizarlo después
+                    if (nodoCurrent.left != null){
+                        cola.enqueue(nodoCurrent.left);
                     }
-                    if (actual.right != null){ 
-                        cola.enqueue(actual.right);
+                    // Si tiene hijo derecho, también lo agregamos a la cola
+                    if (nodoCurrent.right != null){ 
+                        cola.enqueue(nodoCurrent.right);
                     }
                 }
-
+            // Capturamos la excepción en caso de un error inesperado al quitar de la cola
             } catch (actividad1.ExceptionIsEmpty e) {
                 System.out.println("Error al quitar de la cola: " + e.getMessage());
             }
@@ -383,19 +430,26 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
 
     // METODO QUE RETORNA EL ÁREA DE UN ARBOL
     public String drawBST() {
-        StringBuilder sb = new StringBuilder();
-        drawSubtree(root, sb, 0);
-        return sb.toString();
+        StringBuilder sb = new StringBuilder(); // Creamos un StringBuilder para construir el texto del árbol
+        drawSubtree(root, sb, 0); // Llamamos al método auxiliar desde la raíz con nivel 0
+        return sb.toString(); // Convertimos el StringBuilder a String y lo retornamos
     }
 
+    // MÉTODO RECURSIVO QUE DIBUJA EL SUBÁRBOL A PARTIR DE UN NODO DADO
     private void drawSubtree(Node nodo, StringBuilder sb, int nivel) {
-        if (nodo == null){
+        if (nodo == null){ // Cuando llegamos al final de una rama
             return;
         }
 
-        drawSubtree(nodo.right, sb, nivel + 1);
+        drawSubtree(nodo.right, sb, nivel + 1); // Primero se dibuja el subárbol derecho
+        
+        /* Se agrega sangría dependiendo del nivel (más profundo, más espacio)
+        Se agrega el conector visual del nodo
+        Se agrega el valor del nodo
+        Se agrega salto de línea */
         sb.append("      ".repeat(nivel)).append("|--- ").append(nodo.data).append("\n");
-        drawSubtree(nodo.left, sb, nivel + 1);
+        
+        drawSubtree(nodo.left, sb, nivel + 1); // Luego se dibuja el subárbol izquierdo
     }
 
     // METODO QUE IMPRIME LA REPRESENTACION ENTRE PARENTESIS CON SANGRIA DE UN ARBOL
