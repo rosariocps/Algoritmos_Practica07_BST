@@ -260,6 +260,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         return countHojas(nodo.left) + countHojas(nodo.right);
     }
 
+    // METODO QUE HALLA LA ALTURA DE UN SUBARBOL CON RAIZ DE DATA "x"
     public int height(E x) throws ItemNotFound {
         Node nodoRaiz = getNode(x); // Obtenemos el nodo con la data x
 
@@ -314,5 +315,32 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         throw new ItemNotFound("El nodo con data " + data + " no existe.");
     }
 
+    // MÉTODO QUE RETORNA LA AMPLITUD DE UN ARBOL
+    public int amplitude(int nivel) throws ItemNotFound {
+        if (isEmpty()) {
+            return 0;
+        }
+
+        int altura = height(root.data);
+
+        if(nivel < 0 || nivel > altura){
+            return 0;
+        }
+
+        return contarNodosEnNivel(root,nivel);
+    }
+
+    // MÉTODO RECURSIVO PARA CONTAR CUANTOS NODOS HAY EN UN NIVEL EN ESPECÍFICO
+    private int contarNodosEnNivel(Node nodo, int nivel) {
+        if (nodo == null) {
+            return 0;
+        }
+        if (nivel == 0) {
+            return 1;
+        } else {
+            return contarNodosEnNivel(nodo.left, nivel - 1) +
+                    contarNodosEnNivel(nodo.right, nivel - 1);
+        }
+    }
     
 }

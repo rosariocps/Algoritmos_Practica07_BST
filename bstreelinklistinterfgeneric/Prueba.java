@@ -43,6 +43,9 @@ public class Prueba {
             arbolito2.insert(1.1);
             arbolito2.insert(9.9);
             arbolito2.insert(6.6);
+            arbolito2.insert(0.5);
+            arbolito2.insert(0.9);
+            arbolito2.insert(10.6);
 
             System.out.println("Elementos de arbolito2: ");
             System.out.println(arbolito2);
@@ -55,6 +58,11 @@ public class Prueba {
             // Altura de un arbol respecto a "x"            
             System.out.println("Altura del subarbol con raiz 7.7: " + arbolito2.height(7.7));
             System.out.println("Altura del arbol completo: " + arbolito2.height(2.2));
+            // Amplitudes del arbol
+            System.out.println("Amplitud del arbol en nivel 0: " + arbolito2.amplitude(0));
+            System.out.println("Amplitud del arbol en nivel 1: " + arbolito2.amplitude(1));
+            System.out.println("Amplitud del arbol en nivel 2: " + arbolito2.amplitude(2));
+            System.out.println("Amplitud del arbol en nivel 3: " + arbolito2.amplitude(3));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
