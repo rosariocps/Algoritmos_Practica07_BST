@@ -343,4 +343,43 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         }
     }
     
+    // METODO QUE RETORNA EL ÁREA DE UN ARBOL
+    public int areaBST() throws ItemNotFound {
+        if (isEmpty()) {
+            return 0;
+        }
+
+        // Paso 1: Se calcula el número de hojas
+        int nodosHoja = 0;
+        QueueLink<Node> cola = new QueueLink<>();
+        cola.enqueue(root);
+
+        while (!cola.isEmpty()) {
+            try {
+                Node actual = cola.dequeue();
+
+                if (actual.left == null && actual.right == null) {
+                    nodosHoja++;
+                } else {
+                    if (actual.left != null){
+                        cola.enqueue(actual.left);
+                    }
+                    if (actual.right != null){ 
+                        cola.enqueue(actual.right);
+                    }
+                }
+
+            } catch (actividad1.ExceptionIsEmpty e) {
+                System.out.println("Error al quitar de la cola: " + e.getMessage());
+            }
+        }
+
+        // Paso 2: Se calcula la altura con el metodo que ya se implemento
+        int altura = height(root.data);
+
+        // Paso 3: Retorna la multiplicación
+        return nodosHoja * altura;
+    }
+
+
 }
