@@ -400,32 +400,36 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
 
     // METODO QUE IMPRIME LA REPRESENTACION ENTRE PARENTESIS CON SANGRIA DE UN ARBOL
     public String parenthesize(){
-        StringBuilder sb = new StringBuilder();
-        parenthesize(root, sb, 0);
-        return sb.toString();
+        StringBuilder sb = new StringBuilder(); // Se crea un StringBuilder para construir el texto final
+        parenthesize(root, sb, 0); // Se llama al método recursivo empezando desde la raíz, nivel 0
+        return sb.toString(); // Se convierte el StringBuilder a String y se retorna
     }
 
+    // MÉTODO PRIVADO RECURSIVO QUE CONSTRUYE LA REPRESENTACIÓN ENTRE PARÉNTESIS
     private void parenthesize(Node nodo, StringBuilder sb, int nivel){
         if (nodo == null){
-            return;
+            return; // Si el nodo es nulo, no hay nada que procesar y se termina esta rama
         }
-        
+        // Para la sangría, se agregan espacios según el nivel y seguidamente se agrega el dato del nodo actual
         sb.append("   ".repeat(nivel)).append(nodo.data);
 
+        // Si el nodo tiene al menos un hijo (izquierdo o derecho), abrimos paréntesis
         if (nodo.left != null || nodo.right != null) {
-            sb.append(" (\n");
+            sb.append(" (\n"); // Se abre paréntesis y se hace salto de línea
 
+            // Si el nodo tiene hijo izquierdo, lo procesamos recursivamente
             if (nodo.left != null) {
-                parenthesize(nodo.left, sb, nivel + 1);
-                sb.append("\n");
+                parenthesize(nodo.left, sb, nivel + 1); // Llamada recursiva para el hijo izquierdo
+                sb.append("\n"); // Agregamos salto de línea después del hijo izquierdo
             }
 
+            // Si el nodo tiene hijo derecho, lo procesamos recursivamente
             if (nodo.right != null) {
-                parenthesize(nodo.right, sb, nivel + 1);
-                sb.append("\n");
+                parenthesize(nodo.right, sb, nivel + 1); // Llamada recursiva para el hijo derecho
+                sb.append("\n");  // Agregamos salto de línea después del hijo derecho
             }
 
-            sb.append("   ".repeat(nivel)).append(")");
+            sb.append("   ".repeat(nivel)).append(")"); // Cerramos el paréntesis al nivel actual, que tiene la misma sangría que el nodo
         }
     }
 }
