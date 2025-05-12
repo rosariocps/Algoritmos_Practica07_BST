@@ -381,5 +381,18 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         return nodosHoja * altura;
     }
 
+    // METODO QUE RETORNA EL ÁREA DE UN ARBOL
+    public String drawBST() {
+        StringBuilder sb = new StringBuilder();
+        drawSubtree(root, sb, 0);
+        return sb.toString();
+    }
 
+    private void drawSubtree(Node nodo, StringBuilder sb, int nivel) {
+        if (nodo == null) return;
+
+        drawSubtree(nodo.right, sb, nivel + 1);
+        sb.append("      ".repeat(nivel)).append("|--- ").append(nodo.data).append("\n");
+        drawSubtree(nodo.left, sb, nivel + 1);
+    }
 }

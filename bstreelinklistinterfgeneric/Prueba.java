@@ -65,9 +65,38 @@ public class Prueba {
             System.out.println("Amplitud del arbol en nivel 3: " + arbolito2.amplitude(3));
             // Area del arbol
             System.out.println("El area del arbol es: " + arbolito2.areaBST());
+            // Dibujar arbol
+            System.out.println("Dibujo del arbol: ");
+            System.out.println(arbolito2.drawBST());
+
+            LinkedBST<String> arbolDeStrings = new LinkedBST<>();
+            arbolDeStrings.insert("S");
+            arbolDeStrings.insert("A");
+            arbolDeStrings.insert("L");
+            arbolDeStrings.insert("U");
+            arbolDeStrings.insert("D");
+            arbolDeStrings.insert("O");
+
+            // Dibujar arbol
+            System.out.println("Dibujo del arbolDeStrings: ");
+            System.out.println(arbolDeStrings.drawBST());
+
+            // Verificar si dos arboles tienen el mismo área
+            System.out.println("¿Los arboles arbolito2 y arbolDeStrings tiene la misma area?");
+            System.out.println(sameArea(arbolito2,arbolDeStrings));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    //METODO QUE VERIFICA SI DOS ARBOLES TIENEN LA MISMA AREA
+    public static boolean sameArea(LinkedBST<?> arbol1,LinkedBST<?> arbol2){
+        try {
+            return arbol1.areaBST() == arbol2.areaBST();
+        } catch (Exception e) {
+            System.out.println("Error al calcular área: " + e.getMessage());
+            return false;
         }
     }
 }
