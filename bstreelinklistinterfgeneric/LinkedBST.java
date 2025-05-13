@@ -29,10 +29,13 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     }
 
     private Node insert(Node node, E data) throws ItemDuplicated { // metodo recursivo para insertar
-        if (node == null) { // si el nodo es null, entonces ahi va el nuevo dato
+        if (node == null) { // si el nodo apunta null, entonces ahi va el nuevo dato
             return new Node(data); // creo el nuevo nodo
         }
         int comp = data.compareTo(node.data); // comparo el nuevo dato con el actual
+        /*Negativo: data es menor que node.data
+        Positivo: data es mayor que node.data
+        Cero: son iguales (dato duplicado)*/
         if (comp < 0) { // si es menor, lo inserto a la izquierda
             node.left = insert(node.left, data);
         } else if (comp > 0) { // si es mayor, lo inserto a la derecha
@@ -73,7 +76,6 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         }
         root = delete(root, data); // llamo al metodo recursivo empezando desde la raiz
     }
-    
     /**
      * Elimina un nodo del árbol considerando los tres casos:
      * 1. Nodo sin hijos (hoja)
@@ -85,6 +87,9 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             return null;
         }
         int comp = data.compareTo(node.data); // comparo el dato con el nodo actual
+        /*Negativo: data es menor que node.data
+        Positivo: data es mayor que node.data
+        Cero: son iguales (dato duplicado)*/
         if (comp < 0) { // si es menor, busco a la izquierda
             node.left = delete(node.left, data);
         } else if (comp > 0) { // si es mayor, busco a la derecha
@@ -95,8 +100,8 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
             if (node.right == null) return node.left; // si no tiene hijo derecho, lo reemplazo por el izquierdo
             //Caso 3: tiene dos hijos
             Node min = min(node.right); // si tiene dos hijos, busco el menor del lado derecho
-            node.data = min.data; // copio ese valor en el nodo actual
-            node.right = delete(node.right, min.data); // y ahora elimino ese nodo menor
+            node.data = min.data; // hacemos el "swap" copiamos ese valor pequeño al nodo actual
+            node.right = delete(node.right, min.data); //eliminamos el nodo que tenia ese valor pequeño
         }
         return node; // devuelvo el nodo actualizado
     }
@@ -135,6 +140,8 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     }
     
     // metodo que recorre el arbol en pre-orden y guarda los datos en el StringBuilder
+    // En pre-orden, primero se visita la raíz, luego el subárbol izquierdo y finalmente el subárbol derecho
+    // En este caso, se utiliza un StringBuilder para construir la cadena de texto
     private void preOrder(Node node, StringBuilder sb) {
         if (node != null) {
             sb.append(node.data).append(" ");   // visita la raiz primero
