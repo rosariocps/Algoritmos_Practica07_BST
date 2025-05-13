@@ -308,11 +308,11 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
 
         // Mientras haya nodos en la cola, seguimos procesando nivel por nivel
         while (!cola.isEmpty()) {
-            int nivel = cola.numeroDeElementos(); // Obtenemos el número de nodos en el nivel actual
+            int numElementosNivel = cola.numeroDeElementos(); // Obtenemos el número de nodos en el nivel actual
             altura++; // Aumentamos la altura por cada nivel recorrido
 
             // Recorremos todos los nodos del nivel actual
-            for (int i = 0; i < nivel; i++) {
+            for (int i = 0; i < numElementosNivel; i++) {
                 try {
                     Node nodoCurrent = cola.dequeue(); // Extraemos el nodo actual
 
