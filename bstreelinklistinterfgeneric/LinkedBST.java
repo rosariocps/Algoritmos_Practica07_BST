@@ -355,7 +355,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         throw new ItemNotFound("El nodo con data " + data + " no existe.");
     }
 
-    // MÉTODO QUE RETORNA LA AMPLITUD DE UN ARBOL
+    // MÉTODO QUE RETORNA LA CANTIDAD DE NODOS DE UN NIVEL EN ESPECÍFICO
     public int amplitude(int nivel) throws ItemNotFound {
         // Verificamos si el árbol está vacío
         if (isEmpty()) {
@@ -364,6 +364,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
 
         // Calculamos la altura del árbol desde la raíz, usando el método height()
         int altura = height(root.data);
+        
 
         // Si el nivel solicitado es menor que 0 o mayor que la altura del árbol, el nivel no existe, así que retornamos 0
         if(nivel < 0 || nivel > altura){
@@ -371,6 +372,25 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         }
         // Si el nivel es válido, llamamos al método recursivo que cuenta los nodos en ese nivel
         return contarNodosEnNivel(root,nivel);
+    }
+
+    // METODO QUE RETORNA LA AMPLITUD TOTAL DEL ARBOL
+    public int amplitudTotal() throws ItemNotFound {
+        if (isEmpty()){
+            return 0;
+        }
+
+        int altura = height(root.data);
+        int max = 0;
+
+        for (int i = 0; i <= altura; i++) {
+            int nodosEnNivel = contarNodosEnNivel(root, i);
+            if (nodosEnNivel > max) {
+                max = nodosEnNivel;
+            }
+        }
+
+        return max;
     }
 
     // MÉTODO RECURSIVO PARA CONTAR CUANTOS NODOS HAY EN UN NIVEL EN ESPECÍFICO
