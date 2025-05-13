@@ -428,7 +428,7 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         return nodosHoja * altura;
     }
 
-    // METODO QUE RETORNA EL ÁREA DE UN ARBOL
+    // METODO QUE DIBUJA UN ARBOL
     public String drawBST() {
         StringBuilder sb = new StringBuilder(); // Creamos un StringBuilder para construir el texto del árbol
         drawSubtree(root, sb, 0); // Llamamos al método auxiliar desde la raíz con nivel 0
