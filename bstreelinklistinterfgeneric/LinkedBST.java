@@ -19,6 +19,19 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     }
     private Node root; // este es el nodo raiz del arbol
 
+    private class NodoConPos {
+        Node nodo;
+        int posicion;
+        int separacion;
+
+        public NodoConPos(Node nodo, int posicion, int separacion) {
+            this.nodo = nodo;
+            this.posicion = posicion;
+            this.separacion = separacion;
+        }
+    }
+
+
     public LinkedBST() { // constructor del arbol
         root = null; // al inicio el arbol esta vacio
     }
@@ -455,8 +468,69 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
         return nodosHoja * altura;
     }
 
-    // METODO QUE DIBUJA UN ARBOL
-    public String drawBST() {
+    // MÉTODO QUE IMPRIME EL ÁRBOL
+    public String drawBST() throws ItemNotFound {
+        if (isEmpty()) { // Si el árbol está vacío, retornamos mensaje
+            return "Árbol vacío.";
+        }
+
+        StringBuilder sb = new StringBuilder(); // Creamos un StringBuilder para ir construyendo la salida
+        QueueLink<Node> cola = new QueueLink<>(); // Usamos nuestra cola enlazada propia
+        cola.enqueue(root); // Insertamos el nodo raíz en la cola
+        int altura = height(root.data); // Llamamos al metodo para guardar la altura
+        int nivel = 0; // Comenzamos desde el nivel 0
+
+        // Recorremos mientras la cola tenga elementos (nivel por nivel)
+        while (!cola.isEmpty()) {
+            int numElementos = cola.numeroDeElementos(); // Número de nodos en el nivel actual
+            sb.append("Nivel ").append(nivel).append(":   "); // Imprimimos el encabezado del nivel
+
+            // Calculamos espacio inicial proporcional al nivel
+            int espacios = (int) Math.pow(2, altura - nivel + 1);
+            sb.append(" ".repeat(espacios / 2)); // Agregamos espacio antes del primer nodo
+
+            // Recorremos todos los nodos de este nivel
+            for (int i = 0; i < numElementos; i++) {
+                try {
+                    Node actual = cola.dequeue(); // Extraemos el nodo actual
+                    if (actual != null) {
+                        sb.append(actual.data).append(" ".repeat(espacios)); // Imprimimos el dato y añadimos espacios de separación
+                        // Encolamos los hijos, aunque sea null para mantener el formato
+                        cola.enqueue(actual.left);
+                        cola.enqueue(actual.right);
+                    } else {
+                        // Si el nodo es null, imprimimos espacio para mantener alineación
+                        sb.append(" ".repeat(espacios));
+                        cola.enqueue(null);
+                        cola.enqueue(null);
+                    }
+                } catch (actividad1.ExceptionIsEmpty e) {
+                    sb.append(" ?"); // En caso de error al sacar de la cola
+                }
+            }
+
+            sb.append("\n"); // Saltamos de línea después de cada nivel
+            nivel++; // Pasamos al siguiente nivel
+
+            // Verificamos si todos los elementos en la cola son null (para terminar el bucle)
+            boolean todosNulos = true;
+            for (int i = 0; i < cola.numeroDeElementos(); i++) {
+                try {
+                    Node temp = cola.dequeue(); // Extraemos temporalmente el nodo
+                    if (temp != null) todosNulos = false; // Si hay alguno distinto de null, seguimos
+                    cola.enqueue(temp); // volverlo a insertar
+                } catch (actividad1.ExceptionIsEmpty e) {
+                    System.out.println("Error al quitar de la cola: " + e.getMessage());
+                }
+            }
+            if (todosNulos) break; // Si todos son null, terminamos el recorrido
+        }
+
+        return sb.toString(); // Devolvemos el dibujo final del árbol
+    }
+
+    // METODO QUE DIBUJA UN ARBOL ROTADO 90° A LA IZQUIERDA
+    public String drawBSTRotado() {
         StringBuilder sb = new StringBuilder(); // Creamos un StringBuilder para construir el texto del árbol
         drawSubtree(root, sb, 0); // Llamamos al método auxiliar desde la raíz con nivel 0
         return sb.toString(); // Convertimos el StringBuilder a String y lo retornamos

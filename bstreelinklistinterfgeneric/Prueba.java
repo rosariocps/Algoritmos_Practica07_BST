@@ -63,6 +63,9 @@ public class Prueba {
             System.out.println("Amplitud del arbol en nivel 1: " + arbolito2.amplitude(1));
             System.out.println("Amplitud del arbol en nivel 2: " + arbolito2.amplitude(2));
             System.out.println("Amplitud del arbol en nivel 3: " + arbolito2.amplitude(3));
+
+            System.out.println("Amplitud del arbolito2: " + arbolito2.amplitudTotal());
+
             // Area del arbol
             System.out.println("El area del arbol es: " + arbolito2.areaBST());
             // Dibujar arbol
