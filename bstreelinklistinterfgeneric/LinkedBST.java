@@ -19,19 +19,6 @@ public class LinkedBST<E extends Comparable<E>> implements BinarySearchTree<E> {
     }
     private Node root; // este es el nodo raiz del arbol
 
-    private class NodoConPos {
-        Node nodo;
-        int posicion;
-        int separacion;
-
-        public NodoConPos(Node nodo, int posicion, int separacion) {
-            this.nodo = nodo;
-            this.posicion = posicion;
-            this.separacion = separacion;
-        }
-    }
-
-
     public LinkedBST() { // constructor del arbol
         root = null; // al inicio el arbol esta vacio
     }
